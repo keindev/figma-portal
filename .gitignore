@@ -4,8 +4,8 @@
 *.seed
 *.tgz
 .env
-.yarn-integrity
 .figma.yml
+.yarn-integrity
 /.editorconfig
 /.eslintcache
 /.eslintignore

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as Figma from 'figma-api';
 import { Project, ProjectFile } from 'figma-api/lib/api-types';
 import { promises as fs } from 'fs';
@@ -5,7 +6,7 @@ import { Plugin } from 'imagemin';
 import imageminJpegtran from 'imagemin-jpegtran';
 import imageminOptipng from 'imagemin-optipng';
 import imageminSvgo from 'imagemin-svgo';
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 import objectHash from 'object-hash';
 import Package from 'package-json-helper';
 import path from 'path/posix';
@@ -14,7 +15,7 @@ import yaml from 'yaml';
 
 import { Format, IDownloadLink, IExportFileConfig } from './types';
 
-const API = new Figma.Api({ personalAccessToken: process.env.FIGMA_TOKEN ?? '' });
+export const API = new Figma.Api({ personalAccessToken: process.env.FIGMA_TOKEN ?? '' });
 const DEFAULT_SCALE = 1;
 const CONFIG_FILE_NAME = '.figma.yml';
 const PLUGINS = {
@@ -63,9 +64,8 @@ export default class Portal {
   private async download(url: string, filePath: string, plugin: Plugin | null, task: Task): Promise<void> {
     const { dir, base } = path.parse(filePath);
     const subtask = task.add(`Download {bold ${base}} (./${path.relative(process.cwd(), dir)}):`);
-    const response = await fetch(url);
-    const arrayBuffer = await response.arrayBuffer();
-    let buffer = Buffer.from(arrayBuffer);
+    const response = await axios.get(url, { responseType: 'arraybuffer' });
+    let buffer = response.data;
 
     if (plugin) {
       subtask.update(`Minify {bold ${base}} (./${path.relative(process.cwd(), dir)})`);
