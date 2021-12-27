@@ -6,10 +6,9 @@ import { Plugin } from 'imagemin';
 import imageminJpegtran from 'imagemin-jpegtran';
 import imageminOptipng from 'imagemin-optipng';
 import imageminSvgo from 'imagemin-svgo';
-// import fetch from 'node-fetch';
 import objectHash from 'object-hash';
 import Package from 'package-json-helper';
-import path from 'path/posix';
+import path from 'path';
 import TaskTree, { Task } from 'tasktree-cli';
 import yaml from 'yaml';
 
@@ -27,15 +26,13 @@ const PLUGINS = {
 
 export default class Portal {
   #defaultOutputDir: string;
-  #tasks: TaskTree;
 
   constructor(defaultOutputDir: string) {
     this.#defaultOutputDir = defaultOutputDir;
-    this.#tasks = TaskTree.tree();
   }
 
   async extract(projectName: string): Promise<void> {
-    const mainTask = this.#tasks.start().add('figma-portal:');
+    const mainTask = TaskTree.add('figma-portal:');
 
     if (process.env.FIGMA_TEAM_ID) {
       let task = mainTask.add('Export projects metadata:');
@@ -57,8 +54,6 @@ export default class Portal {
     } else {
       mainTask.fail('FIGMA_TEAM_ID is not defined!');
     }
-
-    this.#tasks.stop();
   }
 
   private async download(url: string, filePath: string, plugin: Plugin | null, task: Task): Promise<void> {

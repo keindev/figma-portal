@@ -68,7 +68,7 @@ jest.spyOn(API, 'getImage').mockImplementation(() =>
 describe('Portal', () => {
   beforeEach(() => {
     jest.resetModules();
-    process.env = { FIGMA_TEAM_ID: '1' };
+    process.env = { FIGMA_TOKEN: 'token', FIGMA_TEAM_ID: 'teamId' };
   });
 
   const portal = new Portal('media');
