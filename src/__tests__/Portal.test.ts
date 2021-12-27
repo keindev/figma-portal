@@ -2,13 +2,14 @@
 // eslint-disable-next-line node/no-extraneous-import
 import { jest } from '@jest/globals';
 import axios from 'axios';
-import dotenv from 'dotenv';
 import { Component } from 'figma-api';
 import { GetFileResult, GetImageResult, GetProjectFilesResult } from 'figma-api/lib/api-types';
 import { promises as fs } from 'fs';
 import path from 'path';
 
 import Portal, { API } from '../Portal';
+
+jest.useFakeTimers();
 
 const PACKAGE = JSON.stringify({ name: 'figma-portal' });
 const CONFIG = `- name: Components / Logo
@@ -23,9 +24,6 @@ const CONFIG = `- name: Components / Logo
   format: pdf
   scale: 1
 `;
-
-jest.useFakeTimers();
-dotenv.config();
 
 jest.spyOn(fs, 'readFile').mockImplementation(filePath => {
   const basename = path.basename(filePath as string);
@@ -68,6 +66,11 @@ jest.spyOn(API, 'getImage').mockImplementation(() =>
 );
 
 describe('Portal', () => {
+  beforeEach(() => {
+    jest.resetModules();
+    process.env = { FIGMA_TEAM_ID: '1' };
+  });
+
   const portal = new Portal('media');
   const output: ([string, string] | [string])[] = [];
 
