@@ -15,8 +15,8 @@ import yaml from 'yaml';
 import { Format, IDownloadLink, IExportFileConfig } from './types';
 
 export const API = new Figma.Api({ personalAccessToken: process.env.FIGMA_TOKEN ?? '' });
+export const CONFIG_FILE_NAME = '.figma.yml';
 const DEFAULT_SCALE = 1;
-const CONFIG_FILE_NAME = '.figma.yml';
 const PLUGINS = {
   [Format.JPG]: imageminOptipng(),
   [Format.PNG]: imageminJpegtran(),
@@ -31,7 +31,7 @@ export default class Portal {
     this.#defaultOutputDir = defaultOutputDir;
   }
 
-  async extract(projectName: string): Promise<void> {
+  async extract(projectName: string, configPath = CONFIG_FILE_NAME): Promise<void> {
     const mainTask = TaskTree.add('figma-portal:');
 
     if (process.env.FIGMA_TEAM_ID) {
@@ -40,7 +40,7 @@ export default class Portal {
       const project = projects.find(({ name }) => name === projectName);
 
       if (project) {
-        const links = await this.exportProjectComponents(project, task);
+        const links = await this.exportProjectComponents(project, task, configPath);
 
         task.complete('Projects metadata exported!', true);
         task = mainTask.add('Download and minify:');
@@ -133,7 +133,7 @@ export default class Portal {
     }, [] as [string, string, Plugin | null][]);
   }
 
-  private async exportProjectComponents(project: Project, task: Task): Promise<IDownloadLink[]> {
+  private async exportProjectComponents(project: Project, task: Task, configPath: string): Promise<IDownloadLink[]> {
     const subtask = task.add(`Export {bold ${project.name}}:`);
     const { files } = await API.getProjectFiles(project.id.toString());
     const pkg = new Package();
@@ -144,7 +144,7 @@ export default class Portal {
     let downloadLinks: IDownloadLink[] = [];
 
     if (file) {
-      const content = await fs.readFile(CONFIG_FILE_NAME, 'utf8');
+      const content = await fs.readFile(configPath, 'utf8');
       const config: IExportFileConfig[] = content ? yaml.parse(content) : [];
 
       downloadLinks = await this.exportComponents(file, new Map(config.map(item => [item.name, item])), subtask);
