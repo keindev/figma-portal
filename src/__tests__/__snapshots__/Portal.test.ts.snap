@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Portal Components extraction 1`] = `
+Array [
+  Array [
+    "https://example.com/images/logo",
+  ],
+  Array [
+    "https://example.com/images/banner",
+  ],
+  Array [
+    "media",
+  ],
+  Array [
+    "media",
+  ],
+  Array [
+    "media/logo.pdf",
+    "",
+  ],
+  Array [
+    "media/banner.pdf",
+    "",
+  ],
+]
+`;
