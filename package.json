@@ -1,6 +1,6 @@
 {
   "name": "figma-portal",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Simple way to export figma components",
   "license": "MIT",
   "homepage": "https://github.com/keindev/figma-portal#readme",
@@ -17,8 +17,10 @@
   "type": "module",
   "exports": {
     ".": "./lib/index.js",
-    "./lib/types": "./lib/types.js",
-    "./lib/entities/*": "./lib/entities/*.js"
+    "./lib/types": "./lib/types.js"
+  },
+  "bin": {
+    "figma-portal": "bin/figma-portal.js"
   },
   "repository": {
     "type": "git",
