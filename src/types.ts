@@ -1,5 +1,3 @@
-import { Plugin } from 'imagemin';
-
 export enum Format {
   JPG = 'jpg',
   PNG = 'png',
@@ -7,7 +5,8 @@ export enum Format {
   PDF = 'pdf',
 }
 
-export type IDownloadLink = [string, string, Plugin | null];
+export type IOptimizationCallback = (buffer: Buffer) => Promise<Buffer>;
+export type IDownloadLink = [string, string, IOptimizationCallback | null];
 
 export interface IExportFileConfig {
   /** Name of component in Figma */

@@ -1,0 +1,4 @@
+overrideScripts:
+  "generate:media": "node --experimental-specifier-resolution=node --loader ts-node/esm src/cli/bin.ts extract -d media -p GitHub"
+
+ignoreDependencies: ["figma-portal"]
