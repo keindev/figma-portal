@@ -2,8 +2,7 @@ import axios from 'axios';
 import * as Figma from 'figma-api';
 import { Project, ProjectFile } from 'figma-api/lib/api-types';
 import { promises as fs } from 'fs';
-import { Plugin } from 'imagemin';
-import imageminJpegtran from 'imagemin-jpegtran';
+import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminOptipng from 'imagemin-optipng';
 import imageminSvgo from 'imagemin-svgo';
 import objectHash from 'object-hash';
@@ -12,14 +11,14 @@ import path from 'path';
 import TaskTree, { Task } from 'tasktree-cli';
 import yaml from 'yaml';
 
-import { Format, IDownloadLink, IExportFileConfig } from './types';
+import { Format, IDownloadLink, IExportFileConfig, IOptimizationCallback } from './types';
 
 export const API = new Figma.Api({ personalAccessToken: process.env.FIGMA_TOKEN ?? '' });
 export const CONFIG_FILE_NAME = '.figma.yml';
 const DEFAULT_SCALE = 1;
-const PLUGINS = {
-  [Format.JPG]: imageminOptipng(),
-  [Format.PNG]: imageminJpegtran(),
+const LIBRARIES = {
+  [Format.JPG]: imageminMozjpeg(),
+  [Format.PNG]: imageminOptipng(),
   [Format.SVG]: imageminSvgo(),
   [Format.PDF]: null,
 };
@@ -56,7 +55,12 @@ export default class Portal {
     }
   }
 
-  private async download(url: string, filePath: string, plugin: Plugin | null, task: Task): Promise<void> {
+  private async download(
+    url: string,
+    filePath: string,
+    plugin: IOptimizationCallback | null,
+    task: Task
+  ): Promise<void> {
     const { dir, base } = path.parse(filePath);
     const subtask = task.add(`Download {bold ${base}} (./${path.relative(process.cwd(), dir)}):`);
     const response = await axios.get(url, { responseType: 'arraybuffer' });
@@ -83,7 +87,7 @@ export default class Portal {
     const downloadLinks = await this.exportImages(
       file.key,
       exportOptions,
-      new Map<string, [string, Plugin | null]>(
+      new Map<string, [string, IOptimizationCallback | null]>(
         Object.entries(components).reduce((acc, [nodeId, { name }]) => {
           const config = configs.get(name);
 
@@ -97,12 +101,12 @@ export default class Portal {
             exportOptions.set(hash, exportFormat);
             acc.push([
               nodeId,
-              [path.normalize(`${path.join(process.cwd(), outputDir, fileName)}.${format}`), PLUGINS[format]],
+              [path.normalize(`${path.join(process.cwd(), outputDir, fileName)}.${format}`), LIBRARIES[format]],
             ]);
           }
 
           return acc;
-        }, [] as [string, [string, Plugin | null]][])
+        }, [] as [string, [string, IOptimizationCallback | null]][])
       )
     );
 
@@ -114,8 +118,8 @@ export default class Portal {
   private async exportImages(
     fileKey: string,
     exportOptions: Map<string, { format: Format; ids: Set<string>; scale: number }>,
-    downloadOptions: Map<string, [string, Plugin | null]>
-  ): Promise<[string, string, Plugin | null][]> {
+    downloadOptions: Map<string, [string, IOptimizationCallback | null]>
+  ): Promise<[string, string, IOptimizationCallback | null][]> {
     const exportedImages = await Promise.all(
       [...exportOptions.values()].map(({ ids, ...parameters }) =>
         API.getImage(fileKey, { ids: [...ids.keys()].join(','), ...parameters })
@@ -130,7 +134,7 @@ export default class Portal {
       });
 
       return acc;
-    }, [] as [string, string, Plugin | null][]);
+    }, [] as [string, string, IOptimizationCallback | null][]);
   }
 
   private async exportProjectComponents(project: Project, task: Task, configPath: string): Promise<IDownloadLink[]> {
