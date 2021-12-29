@@ -1,8 +1,6 @@
 import TaskTree from 'tasktree-cli';
 import { Arguments } from 'yargs';
 
-import Portal, { CONFIG_FILE_NAME } from '../../Portal';
-
 export default {
   command: 'extract',
   desc: 'Export and download figma components',
@@ -23,7 +21,6 @@ export default {
       string: true,
       alias: 'c',
       description: 'Extract configuration',
-      default: CONFIG_FILE_NAME,
     },
   },
   handler: async ({
@@ -36,10 +33,11 @@ export default {
     project: string;
   }>): Promise<void> => {
     const tree = TaskTree.tree().start();
+    const { default: Portal, CONFIG_FILE_NAME } = await import('../../Portal');
     const portal = new Portal(dir);
 
     try {
-      await portal.extract(project, config);
+      await portal.extract(project, config ?? CONFIG_FILE_NAME);
       tree.exit();
     } catch (error) {
       if (error instanceof Error) {
