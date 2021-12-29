@@ -17,8 +17,10 @@
   "type": "module",
   "exports": {
     ".": "./lib/index.js",
-    "./lib/types": "./lib/types.js",
-    "./lib/entities/*": "./lib/entities/*.js"
+    "./lib/types": "./lib/types.js"
+  },
+  "bin": {
+    "figma-portal": "bin/figma-portal.js"
   },
   "repository": {
     "type": "git",

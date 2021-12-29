@@ -23,7 +23,7 @@ npm install figma-portal
 ## Usage
 
 ```
-figma-portal extract -d DEFAULT_OUTPUT_DIR -p PROJECT_NAME
+figma-portal extract -d DEFAULT_OUTPUT_DIR -p PROJECT_NAME -c .figma.yml
 ```
 
 ### Environment variables
