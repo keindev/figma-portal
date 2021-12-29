@@ -1,6 +1,6 @@
 # :bug: Bug Fixes
 
-- Add bit to package [`554cf10`](https://github.com/keindev/figma-portal/commit/554cf10ff250b1cf1dac61259a8e7cd0652b816a)
+- Fix env init in cli [`772c05c`](https://github.com/keindev/figma-portal/commit/772c05c15109c38dad8b00eb0131a21fb78fbd24)
 
 ---
 
