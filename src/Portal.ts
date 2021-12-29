@@ -42,9 +42,12 @@ export default class Portal {
         const links = await this.exportProjectComponents(project, task, configPath);
 
         task.complete('Projects metadata exported!', true);
-        task = mainTask.add('Download and minify:');
-        await Promise.all(links.map(options => this.download(...options, task)));
-        task.complete();
+
+        if (links.length) {
+          task = mainTask.add('Download and minify:');
+          await Promise.all(links.map(options => this.download(...options, task)));
+          task.complete();
+        }
       } else {
         task.fail(`Project with name="{bold ${projectName}} not found!"`);
       }

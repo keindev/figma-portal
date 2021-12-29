@@ -1,6 +1,6 @@
 {
   "name": "figma-portal",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "Simple way to export figma components",
   "keywords": [
     "component",
