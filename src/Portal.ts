@@ -1,14 +1,13 @@
 import axios from 'axios';
-import execBuffer from 'exec-buffer';
 import * as Figma from 'figma-api';
 import { Project, ProjectFile } from 'figma-api/lib/api-types';
 import { promises as fs } from 'fs';
-import jpegtran from 'jpegtran-bin';
+import imageminMozjpeg from 'imagemin-mozjpeg';
+import imageminOptipng from 'imagemin-optipng';
+import imageminSvgo from 'imagemin-svgo';
 import objectHash from 'object-hash';
-import optipng from 'optipng-bin';
 import Package from 'package-json-helper';
 import path from 'path';
-import { optimize } from 'svgo';
 import TaskTree, { Task } from 'tasktree-cli';
 import yaml from 'yaml';
 
@@ -18,23 +17,9 @@ export const API = new Figma.Api({ personalAccessToken: process.env.FIGMA_TOKEN 
 export const CONFIG_FILE_NAME = '.figma.yml';
 const DEFAULT_SCALE = 1;
 const LIBRARIES = {
-  [Format.JPG]: (buffer: Buffer): Promise<Buffer> =>
-    execBuffer({
-      input: buffer,
-      bin: jpegtran,
-      args: ['-copy', 'none', '-optimize', '-outfile', execBuffer.output, execBuffer.input],
-    }),
-  [Format.PNG]: (buffer: Buffer): Promise<Buffer> =>
-    execBuffer({
-      input: buffer,
-      bin: optipng,
-      args: ['-strip', 'all', '-clobber', '-o', '3', '-out', execBuffer.output, '-fix', '-i', '0', execBuffer.input],
-    }),
-  [Format.SVG]: async (buffer: Buffer): Promise<Buffer> => {
-    const { data } = await optimize(buffer.toString(), { multipass: true });
-
-    return Buffer.from(data);
-  },
+  [Format.JPG]: imageminMozjpeg(),
+  [Format.PNG]: imageminOptipng(),
+  [Format.SVG]: imageminSvgo(),
   [Format.PDF]: null,
 };
 
