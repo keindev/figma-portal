@@ -1,0 +1,20 @@
+{
+  "name": "figma-portal",
+  "version": "0.9.4",
+  "description": "Simple way to export figma components",
+  "keywords": [
+    "component",
+    "export",
+    "figma"
+  ],
+  "repo": "keindev/figma-portal",
+  "type": "utils",
+  "links": {
+    "git": "https://github.com/keindev/figma-portal",
+    "npm": "https://www.npmjs.com/package/figma-portal",
+    "homepage": "https://github.com/keindev/figma-portal#readme"
+  },
+  "files": {
+    "logo": "media/logo.svg"
+  }
+}
