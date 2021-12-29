@@ -17,7 +17,7 @@ Simple way to export a [Figma](https://www.figma.com/) components by name:ok_han
 ## Install
 
 ```console
-npm install figma-portal
+npm install figma-portal --save-dev
 ```
 
 ## Usage

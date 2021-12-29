@@ -1,6 +1,10 @@
 # :bug: Bug Fixes
 
-- Fix env init in cli [`772c05c`](https://github.com/keindev/figma-portal/commit/772c05c15109c38dad8b00eb0131a21fb78fbd24)
+- Fix file search by package name [`7621fec`](https://github.com/keindev/figma-portal/commit/7621fec3947a6b0539b0eefbadbc27c778d0a78e)
+
+# :memo: Internal changes
+
+- Fix install section [`c5d8745`](https://github.com/keindev/figma-portal/commit/c5d8745d96033d1cdf36bfcd853a9e7af3555796)
 
 ---
 

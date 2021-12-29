@@ -140,7 +140,7 @@ export default class Portal {
 
     await pkg.read();
 
-    const file = files.find(({ name }) => name === pkg.name);
+    const file = files.find(({ name }) => name === pkg.nameWithoutScope);
     let downloadLinks: IDownloadLink[] = [];
 
     if (file) {
@@ -149,6 +149,8 @@ export default class Portal {
 
       downloadLinks = await this.exportComponents(file, new Map(config.map(item => [item.name, item])), subtask);
       subtask.complete(`{bold ${project.name}}`);
+    } else {
+      subtask.fail(`File with name "{bold ${pkg.nameWithoutScope}}" not found!`);
     }
 
     return downloadLinks;
