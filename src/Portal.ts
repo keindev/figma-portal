@@ -2,10 +2,10 @@ import axios from 'axios';
 import * as Figma from 'figma-api';
 import { Project, ProjectFile } from 'figma-api/lib/api-types';
 import { promises as fs } from 'fs';
-import imageminSvgo from 'imagemin-svgo';
 import objectHash from 'object-hash';
 import Package from 'package-json-helper';
 import path from 'path';
+import { optimize } from 'svgo';
 import TaskTree, { Task } from 'tasktree-cli';
 import yaml from 'yaml';
 
@@ -17,7 +17,11 @@ const DEFAULT_SCALE = 1;
 const LIBRARIES = {
   [Format.JPG]: null,
   [Format.PNG]: null,
-  [Format.SVG]: imageminSvgo(),
+  [Format.SVG]: (buffer: Buffer) => {
+    const { data } = optimize(buffer.toString(), { multipass: true });
+
+    return Buffer.from(data);
+  },
   [Format.PDF]: null,
 };
 
