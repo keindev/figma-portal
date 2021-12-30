@@ -5,8 +5,10 @@
 <details>
 <summary>Dependencies</summary>
 
+- Added **[svgo](https://www.npmjs.com/package/svgo/v/2.8.0)** with `^2.8.0`
 - Removed **[imagemin-mozjpeg](https://www.npmjs.com/package/imagemin-mozjpeg/v/10.0.0)**, with `^10.0.0`
 - Removed **[imagemin-optipng](https://www.npmjs.com/package/imagemin-optipng/v/8.0.0)**, with `^8.0.0`
+- Removed **[imagemin-svgo](https://www.npmjs.com/package/imagemin-svgo/v/10.0.1)**, with `^10.0.1`
 
 </details>
 
@@ -18,9 +20,13 @@
 - Bumped **[eslint-plugin-jest](https://www.npmjs.com/package/eslint-plugin-jest/v/25.3.3)** from `25.3.2` to `25.3.3`
 - Removed **[@types/imagemin-mozjpeg](https://www.npmjs.com/package/@types/imagemin-mozjpeg/v/8.0.1)**, with `^8.0.1`
 - Removed **[@types/imagemin-optipng](https://www.npmjs.com/package/@types/imagemin-optipng/v/5.2.1)**, with `^5.2.1`
-- Removed **[@types/svgo](https://www.npmjs.com/package/@types/svgo/v/2.6.0)**, with `^2.6.0`
+- Removed **[@types/imagemin-svgo](https://www.npmjs.com/package/@types/imagemin-svgo/v/10.0.0)**, with `^10.0.0`
 
 </details>
+
+# :fire: Improvements
+
+- Replace `imagemin-svgo` to svgo lib [`9e60157`](https://github.com/keindev/figma-portal/commit/9e6015760a13e7be2764a6105034b30419b79bc4)
 
 # :bug: Bug Fixes
 
