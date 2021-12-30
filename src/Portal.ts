@@ -2,8 +2,6 @@ import axios from 'axios';
 import * as Figma from 'figma-api';
 import { Project, ProjectFile } from 'figma-api/lib/api-types';
 import { promises as fs } from 'fs';
-import imageminMozjpeg from 'imagemin-mozjpeg';
-import imageminOptipng from 'imagemin-optipng';
 import imageminSvgo from 'imagemin-svgo';
 import objectHash from 'object-hash';
 import Package from 'package-json-helper';
@@ -17,8 +15,8 @@ export const API = new Figma.Api({ personalAccessToken: process.env.FIGMA_TOKEN 
 export const CONFIG_FILE_NAME = '.figma.yml';
 const DEFAULT_SCALE = 1;
 const LIBRARIES = {
-  [Format.JPG]: imageminMozjpeg(),
-  [Format.PNG]: imageminOptipng(),
+  [Format.JPG]: null,
+  [Format.PNG]: null,
   [Format.SVG]: imageminSvgo(),
   [Format.PDF]: null,
 };
