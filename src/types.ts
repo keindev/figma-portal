@@ -5,7 +5,7 @@ export enum Format {
   PDF = 'pdf',
 }
 
-export type IOptimizationCallback = (buffer: Buffer) => Promise<Buffer>;
+export type IOptimizationCallback = (buffer: Buffer) => Buffer;
 export type IDownloadLink = [string, string, IOptimizationCallback | null];
 
 export interface IExportFileConfig {
