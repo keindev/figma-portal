@@ -5,32 +5,28 @@
 <details>
 <summary>Dependencies</summary>
 
-- Added **[svgo](https://www.npmjs.com/package/svgo/v/2.8.0)** with `^2.8.0`
-- Removed **[imagemin-mozjpeg](https://www.npmjs.com/package/imagemin-mozjpeg/v/10.0.0)**, with `^10.0.0`
-- Removed **[imagemin-optipng](https://www.npmjs.com/package/imagemin-optipng/v/8.0.0)**, with `^8.0.0`
-- Removed **[imagemin-svgo](https://www.npmjs.com/package/imagemin-svgo/v/10.0.1)**, with `^10.0.1`
+- Bumped **[package-json-helper](https://www.npmjs.com/package/package-json-helper/v/4.0.0)** from `3.0.4` to `4.0.0`
+- Bumped **[tasktree-cli](https://www.npmjs.com/package/tasktree-cli/v/6.0.0)** from `5.1.0` to `6.0.0`
 
 </details>
 
 <details>
 <summary>Dev Dependencies</summary>
 
-- Bumped **[@tagproject/ts-package-shared-config](https://www.npmjs.com/package/@tagproject/ts-package-shared-config/v/6.3.2)** from `6.3.1` to `6.3.2`
-- Bumped **[@types/jest](https://www.npmjs.com/package/@types/jest/v/27.4.0)** from `27.0.3` to `27.4.0`
-- Bumped **[eslint-plugin-jest](https://www.npmjs.com/package/eslint-plugin-jest/v/25.3.3)** from `25.3.2` to `25.3.3`
-- Removed **[@types/imagemin-mozjpeg](https://www.npmjs.com/package/@types/imagemin-mozjpeg/v/8.0.1)**, with `^8.0.1`
-- Removed **[@types/imagemin-optipng](https://www.npmjs.com/package/@types/imagemin-optipng/v/5.2.1)**, with `^5.2.1`
-- Removed **[@types/imagemin-svgo](https://www.npmjs.com/package/@types/imagemin-svgo/v/10.0.0)**, with `^10.0.0`
+- Bumped **[@tagproject/ts-package-shared-config](https://www.npmjs.com/package/@tagproject/ts-package-shared-config/v/6.4.0)** from `6.3.2` to `6.4.0`
+- Bumped **[@types/node](https://www.npmjs.com/package/@types/node/v/17.0.8)** from `17.0.5` to `17.0.8`
+- Bumped **[@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin/v/5.9.0)** from `5.8.1` to `5.9.0`
+- Bumped **[@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser/v/5.9.0)** from `5.8.1` to `5.9.0`
+- Bumped **[eslint](https://www.npmjs.com/package/eslint/v/8.6.0)** from `8.5.0` to `8.6.0`
+- Bumped **[eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import/v/2.25.4)** from `2.25.3` to `2.25.4`
+- Bumped **[eslint-plugin-jest](https://www.npmjs.com/package/eslint-plugin-jest/v/25.3.4)** from `25.3.3` to `25.3.4`
+- Bumped **[ghinfo](https://www.npmjs.com/package/ghinfo/v/3.0.0)** from `2.0.3` to `3.0.0`
 
 </details>
 
-# :fire: Improvements
-
-- Replace `imagemin-svgo` to svgo lib [`9e60157`](https://github.com/keindev/figma-portal/commit/9e6015760a13e7be2764a6105034b30419b79bc4)
-
 # :bug: Bug Fixes
 
-- Remove jpeg & png compression libs [`b02c422`](https://github.com/keindev/figma-portal/commit/b02c422cdbf49605f6bfd84bb54b40c62f58f0ea)
+- Fix imports, bump deps [`2b7890a`](https://github.com/keindev/figma-portal/commit/2b7890a7f06d69868f7fce79681bd6b58eedf32f)
 
 ---
 
