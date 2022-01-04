@@ -6,7 +6,8 @@ import objectHash from 'object-hash';
 import Package from 'package-json-helper';
 import path from 'path';
 import { optimize } from 'svgo';
-import TaskTree, { Task } from 'tasktree-cli';
+import TaskTree from 'tasktree-cli';
+import { Task } from 'tasktree-cli/lib/Task';
 import yaml from 'yaml';
 
 import { Format, IDownloadLink, IExportFileConfig, IOptimizationCallback } from './types';
