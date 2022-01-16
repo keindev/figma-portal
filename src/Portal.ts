@@ -5,7 +5,7 @@ import { promises as fs } from 'fs';
 import objectHash from 'object-hash';
 import Package from 'package-json-helper';
 import path from 'path';
-import { optimize } from 'svgo';
+import { optimize, OptimizedError, OptimizedSvg } from 'svgo';
 import TaskTree from 'tasktree-cli';
 import { Task } from 'tasktree-cli/lib/Task';
 import yaml from 'yaml';
@@ -19,9 +19,9 @@ const LIBRARIES = {
   [Format.JPG]: null,
   [Format.PNG]: null,
   [Format.SVG]: (buffer: Buffer) => {
-    const { data } = optimize(buffer.toString(), { multipass: true });
+    const result: OptimizedSvg | OptimizedError = optimize(buffer.toString(), { multipass: true });
 
-    return Buffer.from(data);
+    return 'data' in result ? Buffer.from(result.data) : null;
   },
   [Format.PDF]: null,
 };
@@ -69,16 +69,16 @@ export default class Portal {
   ): Promise<void> {
     const { dir, base } = path.parse(filePath);
     const subtask = task.add(`Download {bold ${base}} (./${path.relative(process.cwd(), dir)}):`);
-    const response = await axios.get(url, { responseType: 'arraybuffer' });
-    let buffer = response.data;
+    const { data } = await axios.get(url, { responseType: 'arraybuffer' });
+    let buffer;
 
     if (plugin) {
       subtask.update(`Minify {bold ${base}} (./${path.relative(process.cwd(), dir)})`);
-      buffer = await plugin(buffer);
+      buffer = await plugin(data);
     }
 
     await fs.mkdir(path.dirname(filePath), { recursive: true });
-    await fs.writeFile(filePath, buffer);
+    await fs.writeFile(filePath, buffer ?? data);
     subtask.complete(`{bold ${base}} (./${path.relative(process.cwd(), dir)})`);
   }
 
