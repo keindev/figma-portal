@@ -13,6 +13,9 @@
     "export",
     "figma"
   ],
+  "bugs": {
+    "url": "https://github.com/keindev/figma-portal/issues"
+  },
   "types": "./lib/index.d.ts",
   "type": "module",
   "exports": {
