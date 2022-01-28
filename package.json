@@ -1,6 +1,6 @@
 {
   "name": "figma-portal",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "description": "Simple way to export figma components",
   "license": "MIT",
   "homepage": "https://github.com/keindev/figma-portal#readme",
