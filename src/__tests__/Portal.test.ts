@@ -38,7 +38,10 @@ jest.spyOn(fs, 'readFile').mockImplementation(filePath => {
 jest.spyOn(API, 'getTeamProjects').mockImplementation(() => Promise.resolve({ projects: [{ id: 0, name: 'GitHub' }] }));
 jest.spyOn(API, 'getProjectFiles').mockImplementation(() =>
   Promise.resolve({
-    files: [{ key: '1', name: 'figma-portal' }],
+    files: [
+      { key: '1', name: 'figma-portal' },
+      { key: '2', name: 'figma-portal-assets' },
+    ],
   } as GetProjectFilesResult)
 );
 jest.spyOn(API, 'getFile').mockImplementation(() =>
@@ -92,8 +95,14 @@ describe('Portal', () => {
     return Promise.resolve({ data: Buffer.from('') });
   });
 
-  it('Components extraction', async () => {
+  it('Components extraction with Package name', async () => {
     await portal.extract('GitHub');
+
+    expect(output).toMatchSnapshot();
+  });
+
+  it('Components extraction with File name', async () => {
+    await portal.extract('GitHub', 'figma-portal-assets');
 
     expect(output).toMatchSnapshot();
   });
