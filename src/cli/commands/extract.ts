@@ -1,9 +1,9 @@
 import TaskTree from 'tasktree-cli';
 import { Arguments } from 'yargs';
 
-type IArguments = Arguments<{ config: string; dir: string; project: string }>;
+type IArguments = Arguments<{ config?: string; dir: string; file?: string; project: string }>;
 
-const extract = async ({ project, dir, config }: IArguments): Promise<void> => {
+const extract = async ({ project, dir, config, file }: IArguments): Promise<void> => {
   const tree = TaskTree.tree();
 
   try {
@@ -12,7 +12,7 @@ const extract = async ({ project, dir, config }: IArguments): Promise<void> => {
     const { default: Portal, CONFIG_FILE_NAME } = await import('../../Portal');
     const portal = new Portal(dir);
 
-    await portal.extract(project, config ?? CONFIG_FILE_NAME);
+    await portal.extract(project, file, config ?? CONFIG_FILE_NAME);
     tree.exit();
   } catch (error) {
     if (error instanceof Error) {
@@ -30,6 +30,11 @@ export default {
       string: true,
       alias: 'p',
       description: 'Project name',
+    },
+    file: {
+      string: true,
+      alias: 'f',
+      description: 'File name',
     },
     dir: {
       string: true,

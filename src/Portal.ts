@@ -33,7 +33,7 @@ export default class Portal {
     this.#defaultOutputDir = defaultOutputDir;
   }
 
-  async extract(projectName: string, configPath = CONFIG_FILE_NAME): Promise<void> {
+  async extract(projectName: string, fileName?: string, configPath = CONFIG_FILE_NAME): Promise<void> {
     const mainTask = TaskTree.add('figma-portal:');
 
     if (process.env.FIGMA_TEAM_ID) {
@@ -42,7 +42,7 @@ export default class Portal {
       const project = projects.find(({ name }) => name === projectName);
 
       if (project) {
-        const links = await this.exportProjectComponents(project, task, configPath);
+        const links = await this.exportProjectComponents(project, task, configPath, fileName);
 
         task.complete('Projects metadata exported!', true);
 
@@ -143,24 +143,38 @@ export default class Portal {
     }, [] as [string, string, IOptimizationCallback | null][]);
   }
 
-  private async exportProjectComponents(project: Project, task: Task, configPath: string): Promise<IDownloadLink[]> {
+  private async exportProjectComponents(
+    project: Project,
+    task: Task,
+    configPath: string,
+    fileName?: string
+  ): Promise<IDownloadLink[]> {
     const subtask = task.add(`Export {bold ${project.name}}:`);
     const { files } = await API.getProjectFiles(project.id.toString());
-    const pkg = new Package();
-
-    await pkg.read();
-
-    const file = files.find(({ name }) => name === pkg.nameWithoutScope);
     let downloadLinks: IDownloadLink[] = [];
+    let searchName: string | undefined;
 
-    if (file) {
-      const content = await fs.readFile(configPath, 'utf8');
-      const config: IExportFileConfig[] = content ? yaml.parse(content) : [];
-
-      downloadLinks = await this.exportComponents(file, new Map(config.map(item => [item.name, item])), subtask);
-      subtask.complete(`{bold ${project.name}}`);
+    if (fileName) {
+      searchName = fileName;
     } else {
-      subtask.fail(`File with name "{bold ${pkg.nameWithoutScope}}" not found!`);
+      const pkg = new Package();
+
+      await pkg.read();
+      searchName = pkg.nameWithoutScope;
+    }
+
+    if (searchName) {
+      const file = files.find(({ name }) => name === searchName);
+
+      if (file) {
+        const content = await fs.readFile(configPath, 'utf8');
+        const config: IExportFileConfig[] = content ? yaml.parse(content) : [];
+
+        downloadLinks = await this.exportComponents(file, new Map(config.map(item => [item.name, item])), subtask);
+        subtask.complete(`{bold ${project.name}}`);
+      } else {
+        subtask.fail(`File with name "{bold ${searchName}}" not found!`);
+      }
     }
 
     return downloadLinks;

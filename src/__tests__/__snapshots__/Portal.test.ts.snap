@@ -1,6 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Portal Components extraction 1`] = `
+exports[`Portal Components extraction with File name 1`] = `
+Array [
+  Array [
+    "https://example.com/images/logo",
+  ],
+  Array [
+    "https://example.com/images/banner",
+  ],
+  Array [
+    "media",
+  ],
+  Array [
+    "media",
+  ],
+  Array [
+    "media/logo.pdf",
+    "",
+  ],
+  Array [
+    "media/banner.pdf",
+    "",
+  ],
+  Array [
+    "https://example.com/images/logo",
+  ],
+  Array [
+    "https://example.com/images/banner",
+  ],
+  Array [
+    "media",
+  ],
+  Array [
+    "media",
+  ],
+  Array [
+    "media/logo.pdf",
+    "",
+  ],
+  Array [
+    "media/banner.pdf",
+    "",
+  ],
+]
+`;
+
+exports[`Portal Components extraction with Package name 1`] = `
 Array [
   Array [
     "https://example.com/images/logo",
