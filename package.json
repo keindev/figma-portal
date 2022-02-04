@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "axios": "^0.25.0",
-    "dotenv": "^14.3.2",
+    "dotenv": "^16.0.0",
     "figma-api": "^1.9.2",
     "object-hash": "^2.2.0",
     "package-json-helper": "^4.0.2",
