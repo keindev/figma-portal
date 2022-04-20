@@ -7,7 +7,7 @@ import { GetFileResult, GetImageResult, GetProjectFilesResult } from 'figma-api/
 import { promises as fs } from 'fs';
 import path from 'path';
 
-import Portal, { API } from '../Portal';
+import Portal, { API } from '../Portal.js';
 
 jest.useFakeTimers();
 

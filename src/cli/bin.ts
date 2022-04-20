@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import extract from './commands/extract';
+import extract from './commands/extract.js';
 
 const argv = yargs(hideBin(process.argv));
 
