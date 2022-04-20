@@ -10,7 +10,7 @@ import TaskTree from 'tasktree-cli';
 import { Task } from 'tasktree-cli/lib/Task';
 import yaml from 'yaml';
 
-import { Format, IDownloadLink, IExportFileConfig, IOptimizationCallback } from './types';
+import { Format, IDownloadLink, IExportFileConfig, IOptimizationCallback } from './types.js';
 
 export const API = new Figma.Api({ personalAccessToken: process.env.FIGMA_TOKEN ?? '' });
 export const CONFIG_FILE_NAME = '.figma.yml';
