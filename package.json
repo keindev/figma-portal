@@ -50,7 +50,7 @@
     "test:jest": "node --experimental-vm-modules node_modules/.bin/jest"
   },
   "dependencies": {
-    "axios": "^0.26.1",
+    "axios": "^0.27.2",
     "dotenv": "^16.0.0",
     "figma-api": "^1.10.1",
     "object-hash": "^3.0.0",
